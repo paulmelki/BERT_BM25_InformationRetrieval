@@ -1,2 +1,3 @@
-# bert-search-engine
-This project aims at creating a search engine based on BERT language model.
+# ***Homemade* BERT-based Search Engine**
+## Authors: Anh-Dung LE & Paul MELKI
+### [https://www.tse-fr.eu/](Toulouse School of Economics)
