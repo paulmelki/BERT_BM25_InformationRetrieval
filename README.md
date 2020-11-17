@@ -1,5 +1,5 @@
 # ***Homemade* BERT-based Search Engine**
-#### Anh-Dung LE & Paul MELKI [Toulouse School of Economics](https://www.tse-fr.eu/ )
+#### Anh-Dung LE & Paul MELKI ([Toulouse School of Economics](https://www.tse-fr.eu/ ))
 
 This project aims at implementing a BERT-based working search engine. :mag_right: :satellite:
 
