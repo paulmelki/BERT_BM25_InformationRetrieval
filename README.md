@@ -33,7 +33,7 @@ Now that we have a valid corpus, we begin experimenting with different IR method
 Given, a document $D$ and a $Q$ that contains keywords $q_1,..., q_n$, we define the BM25 score of the document $D$ as:
 
 
-<img src="https://render.githubusercontent.com/render/math?math=score(D, Q) = \sum_{i = 1}^n IDF(q_i) \cdot \frac{TF(q_i, D) \cdot (k_1 + 1)}{TF(q_i, D) + k_1 \cdot \left(1 - b + b \cdot \frac{|D|}{avgdl} \right)}
+<img src="https://render.githubusercontent.com/render/math?math=score(D, Q) = \sum_{i = 1}^n IDF(q_i) \cdot \frac{TF(q_i, D) \cdot (k_1 + 1)}{TF(q_i, D) + k_1 \cdot \left(1 - b + b \cdot \frac{|D|}{avgdl} \right)}">
 
 
 where: 
