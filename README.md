@@ -52,12 +52,9 @@ Following Nogueira and Cho's (2019) method, we try to implement BERT as a docume
 
 As we know, BERT for classification tasks takes two sentences as input. Given a document $D$ and a query $Q$ that have been tokenized using a BERT tokenizer, we concatenate the query (Sentence 1) and the document (Sentence 2) together, separating them with a `[CLS]` classification token, and feed them to the original pre-trained BERT model implement as a binary classifier where the two classes are: 
 
-$$
-\begin{cases}
-0 = \text{not relevant}, \\
-1 = \text{relevant}
-\end{cases}
-$$
+
+<img src="https://render.githubusercontent.com/render/math?math=\begin{cases} 0 = \text{not relevant}, \\ 1 = \text{relevant} \end{cases}">
+
 
 As such, BERT will return the probability of document $D$ being relevant to the query $Q$. Given a certain query $Q$, we apply this method on all documents $D_1, D_2, ..., D_n$ in the corpus and get a *relevance score* for each of them. The documents are then ranked by their obtained scores from most relevant to least relevant (similarly to BM25) and this will be the result of our information retrieval task.
 
