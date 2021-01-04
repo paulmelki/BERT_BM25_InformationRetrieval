@@ -30,18 +30,18 @@ Now that we have a valid corpus, we begin experimenting with different IR method
 
 **BM25** is a TF-IDF method, that retrieves the article that has the highest score based on the query given and the following formula: 
 
-Given, a document $D$ and a $Q$ that contains keywords $q_1,..., q_n$, we define the BM25 score of the document $D$ as:
+Given, a document <img src="https://render.githubusercontent.com/render/math?math=D"> and a <img src="https://render.githubusercontent.com/render/math?math=Q"> that contains keywords <img src="https://render.githubusercontent.com/render/math?math=q_1,..., q_n">, we define the BM25 score of the document <img src="https://render.githubusercontent.com/render/math?math=D"> as:
 
 
 <img src="https://render.githubusercontent.com/render/math?math=score(D, Q) = \sum_{i = 1}^n IDF(q_i) \cdot \frac{TF(q_i, D) \cdot (k_1 + 1)}{TF(q_i, D) + k_1 \cdot \left(1 - b + b \cdot \frac{|D|}{avgdl} \right)}">
 
 
 where: 
-- $TF(q_i, D)$ is the *text frequency* of keyword $q_i$ in document $D$,
-- $IDF(q_i)$ is the *inverse document frequency* of keyword $q_i$, using the well-known definition,
-- $|D|$ is the length of the document $D$ in words.
-- $avgdl$ is the average document length in words in the whole corpus.
-- $k_1$ and $b$ are free parameters that are chosen rather than estimated, and which are usually chosen as $k_1 \in [1.2, 2.0]$ and $b = 0.75$. These may also be chosen based on some advanced optimization.
+- <img src="https://render.githubusercontent.com/render/math?math=TF(q_i, D)"> is the *text frequency* of keyword <img src="https://render.githubusercontent.com/render/math?math=q_i"> in document <img src="https://render.githubusercontent.com/render/math?math=D">,
+- <img src="https://render.githubusercontent.com/render/math?math=IDF(q_i)"> is the *inverse document frequency* of keyword <img src="https://render.githubusercontent.com/render/math?math=q_i">, using the well-known definition,
+- <img src="https://render.githubusercontent.com/render/math?math=|D|"> is the length of the document <img src="https://render.githubusercontent.com/render/math?math=D"> in words.
+- <img src="https://render.githubusercontent.com/render/math?math=avgdl"> is the average document length in words in the whole corpus.
+- <img src="https://render.githubusercontent.com/render/math?math=k_1"> and <img src="https://render.githubusercontent.com/render/math?math=b"> are free parameters that are chosen rather than estimated, and which are usually chosen as <img src="https://render.githubusercontent.com/render/math?math=k_1 \in [1.2, 2.0]"> and <img src="https://render.githubusercontent.com/render/math?math=b = 0.75">. These may also be chosen based on some advanced optimization.
 
 After computing the BM25 score of each document, which gives the relevance of each document to the given query, we sort the documents in descending order from most relevant to least relevant.
 
