@@ -56,7 +56,7 @@ As we know, BERT for classification tasks takes two sentences as input. Given a 
 <img src="https://render.githubusercontent.com/render/math?math=\begin{cases} 0 = \text{not relevant}, \\ 1 = \text{relevant} \end{cases}">
 
 
-As such, BERT will return the probability of document $D$ being relevant to the query $Q$. Given a certain query $Q$, we apply this method on all documents $D_1, D_2, ..., D_n$ in the corpus and get a *relevance score* for each of them. The documents are then ranked by their obtained scores from most relevant to least relevant (similarly to BM25) and this will be the result of our information retrieval task.
+As such, BERT will return the probability of document <img src="https://render.githubusercontent.com/render/math?math=D"> being relevant to the query <img src="https://render.githubusercontent.com/render/math?math=Q">. Given a certain query <img src="https://render.githubusercontent.com/render/math?math=Q">, we apply this method on all documents <img src="https://render.githubusercontent.com/render/math?math=D_1, D_2, ..., D_n"> in the corpus and get a *relevance score* for each of them. The documents are then ranked by their obtained scores from most relevant to least relevant (similarly to BM25) and this will be the result of our information retrieval task.
 
 As we know, the corpus on which BERT has been trained contains the **full English Wikipedia** (2,500M words) along with the BooksCorpus (800M words).
 
