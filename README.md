@@ -9,7 +9,7 @@ It is implemented as part of the course *"Mathematics of Deep Learning Algorithm
 
 ---
 
-## **Part I: Building a Corpus**
+# **Part I: Building a Corpus**
 
 We start our project by building a textual corpus which will form our articles' 
 "database". That is, it will be the database from which the answers to our queries will be retrieved. Due to network and computational constraints, we work on a rather small corpus: a part (only 233 MB, compressed) of a very recent English Wikipedia dump (uploaded online on 20/12/2020), formed of articles whose titles start with the letter "A", which can be retrieved from [**here**](https://dumps.wikimedia.org/enwiki/20201220/). 
@@ -22,11 +22,11 @@ The code and further details related to implementation can be found in the proje
 
 ---
 
-## **Part II: Experiments**
+# **Part II: Experiments**
 
 Now that we have a valid corpus, we begin experimenting with different IR methods and noting the results on queries whose correct results we know (either from perosnal knowledge or from common sense). In particular, we compare the famous *Okapi BM25* method to a simple *BERT* implementation.
 
-### **IR using BM25**
+## **Information Retrieval using BM25**
 
 **BM25** is a TF-IDF method, that retrieves the article that has the highest score based on the query given and the following formula: 
 
@@ -47,7 +47,7 @@ After computing the BM25 score of each document, which gives the relevance of ea
 
 On the implementation side, we use `Rank-BM25` library developed by Dorian Brown (https://github.com/dorianbrown/rank_bm25), and which implements different variants of the BM25 algorithm. It can be easily installed using `pip install rank-bm25`. 
 
-### **IR using BERT**
+## **Information Retrieval using BERT**
 Following Nogueira and Cho's (2019) method, we try to implement BERT as a document re-ranker that will rank the relevance of the documents in the corpus with respect to a given query. 
 
 As we know, BERT for classification tasks takes two sentences as input. Given a document $D$ and a query $Q$ that have been tokenized using a BERT tokenizer, we concatenate the query (Sentence 1) and the document (Sentence 2) together, separating them with a `[CLS]` classification token, and feed them to the original pre-trained BERT model implement as a binary classifier where the two classes are: 
@@ -60,6 +60,6 @@ As such, BERT will return the probability of document <img src="https://render.g
 
 As we know, the corpus on which BERT has been trained contains the **full English Wikipedia** (2,500M words) along with the BooksCorpus (800M words).
 
-For this reason, we thought that we do not need to re-train and finetune BERT for our scoring task, since it has already seen the articles found in our corpus. Being trained on document-level corpus and not word-based ones, BERT would be able to idenitfy the connections between our queries and the articles available in the small corpus that we have.
+For this reason, we thought that we do not need to re-train and finetune BERT for our scoring task, since it has already "seen" the articles found in our corpus. Being trained on document-level corpus and not word-based ones, BERT would be able to idenitfy the connections between our queries and the articles available in the small corpus that we have.
 
-Furthermore, finetuning BERT would require training again on query-answers data sets such as [**MSMARCO**](https://microsoft.github.io/msmarco/) or [**TREC-CAR**](https://trec.nist.gov/pubs/trec26/papers/Overview-CAR.pdf), which were used by Nogueira and Cho (2019) in their implementation. However, due to network constraints (downloading the huge data sets proved not possible) and computational constraints, as well as time constraints (according to Nogueira and Cho, finetuning BERT required more than 30 hours of training), we were unable to finetune it to our specific task. We assumed that it may provide good reasults 'out-of-the-box', however, experimental results have shown otherwise:
+Furthermore, finetuning BERT would require training again on query-answers data sets such as [**MSMARCO**](https://microsoft.github.io/msmarco/) or [**TREC-CAR**](https://trec.nist.gov/pubs/trec26/papers/Overview-CAR.pdf), which were used by Nogueira and Cho (2019) in their implementation. However, due to network constraints (downloading the huge data sets proved not possible) and computational constraints, as well as time constraints (according to Nogueira and Cho, finetuning BERT required more than 30 hours of training), we were unable to finetune it to our specific task. We assumed that it may provide good results 'out-of-the-box'. Unfortunately, experimental results have shown otherwise:
