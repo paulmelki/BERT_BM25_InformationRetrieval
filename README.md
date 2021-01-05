@@ -102,10 +102,17 @@ For this reason, we thought that we do not need to re-train and finetune BERT fo
 
 Furthermore, finetuning BERT would require training again on query-answers data sets such as [**MSMARCO**](https://microsoft.github.io/msmarco/) or [**TREC-CAR**](https://trec.nist.gov/pubs/trec26/papers/Overview-CAR.pdf), which were used by Nogueira and Cho (2019) in their implementation. However, due to network constraints (downloading the huge data sets proved not possible) and computational constraints, as well as time constraints (according to Nogueira and Cho, finetuning BERT required more than 30 hours of training), we were unable to finetune it to our specific task. We assumed that it may provide good results 'out-of-the-box'. Unfortunately, experimental results have shown otherwise:
 
+![BM25 BERT Results](https://github.com/paulmelki/bert-search-engine/blob/main/Assets/bertResults.PNG?raw=true)
+
+Looking at the above results, we can clearly see that the none of the top 5 returned
+documents is related to the simple query we searched for.
+
 ### **BERT Finetuned on MS-MARCO**
 Another experiment we implement is using BERT model implemented by Nogueira and Cho (2019) which has been trained on the full MS-MARCO data set. This trained model is made available on their project's [GitHub page](https://github.com/nyu-dl/dl4marco-bert) and can be easily downloaded and imported. 
 
 After importing the model, we also experiment on some queries with it, without obtaining any improvement in the results. For some reason (that we have not yet figured out), the retrieved articles are not relevant to the queries. This is in contradiction with the actual results obtained by the researchers, who have achieved state-of-the-art results. We will conduct further investigation into our implementation in order to find out the reason for these uncomforming results.
+
+**Note**: Indeed, the main problem with experimenting with BERT is the long time it takes to obtain scores for the documents we have. While BM25 returns results in a couple of seconds, scoring using BERT takes around 15-20 minutes each time we try a certain query. This can be quite problematic for heavy testing and also for providing a valid information retrieval solution for users, for example.
 
 # **Part III: Final Discussion**
 
