@@ -33,7 +33,7 @@ Now that we have a valid corpus, we begin experimenting with different IR method
 Given, a document <img src="https://render.githubusercontent.com/render/math?math=D"> and a <img src="https://render.githubusercontent.com/render/math?math=Q"> that contains keywords <img src="https://render.githubusercontent.com/render/math?math=q_1,..., q_n">, we define the BM25 score of the document <img src="https://render.githubusercontent.com/render/math?math=D"> as:
 
 
-<img src="https://render.githubusercontent.com/render/math?math=score(D, Q) = \sum_{i = 1}^n IDF(q_i) \cdot \frac{TF(q_i, D) \cdot (k_1 + 1)}{TF(q_i, D) + k_1 \cdot \left(1 - b + b \cdot \frac{|D|}{avgdl} \right)}">
+<img src="https://render.githubusercontent.com/render/math?math=score(D, Q) = \sum_{i = 1}^n IDF(q_i) \cdot \frac{TF(q_i, D) \cdot (k_1 + 1)}{TF(q_i, D) + k_1 \cdot \left( 1 - b \plus b \cdot \frac{|D|}{avgdl} \right)}">
 
 
 where: 
@@ -48,7 +48,8 @@ After computing the BM25 score of each document, which gives the relevance of ea
 On the implementation side, we use `Rank-BM25` library developed by Dorian Brown (https://github.com/dorianbrown/rank_bm25), and which implements different variants of the BM25 algorithm. It can be easily installed using `pip install rank-bm25`. 
 
 ## **Information Retrieval using BERT**
-Following Nogueira and Cho's (2019) method, we try to implement BERT as a document re-ranker that will rank the relevance of the documents in the corpus with respect to a given query. 
+### **BERT without Finetuning**
+Following Nogueira and Cho's (2019) method, we try to implement **BERT** as a document re-ranker that will rank the relevance of the documents in the corpus with respect to a given query. 
 
 As we know, BERT for classification tasks takes two sentences as input. Given a document $D$ and a query $Q$ that have been tokenized using a BERT tokenizer, we concatenate the query (Sentence 1) and the document (Sentence 2) together, separating them with a `[CLS]` classification token, and feed them to the original pre-trained BERT model implement as a binary classifier where the two classes are: 
 
