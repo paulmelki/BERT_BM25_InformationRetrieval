@@ -1,11 +1,17 @@
 # ***Homemade* BERT-based Search Engine**
 #### Anh-Dung LE & Paul MELKI ([Toulouse School of Economics](https://www.tse-fr.eu/ ))
 
-This project aims at implementing a BERT-based working search engine. :mag_right: :satellite:
+This project aims at comparing two IR methods: BM25 and a BERT-based search engine. :mag_right: :satellite:
 
-The project is inspired by the recent work by **R. Noguiera and K. Cho (2019), [*Passage Re-ranking with BERT*](https://arxiv.org/pdf/1901.04085.pdf)**, which shows that language models are particularly useful for information retrieval, the main task implemented by a search engine. It also aims at comparing different models and different architecture (*END-TO-END* vs. *BM25 + BERT*). 
+The project is inspired by the recent work by **R. Noguiera and K. Cho (2019), [*Passage Re-ranking with BERT*](https://arxiv.org/pdf/1901.04085.pdf)**, which shows that language models are particularly useful for information retrieval, the main task implemented by a search engine.
 
 It is implemented as part of the course *"Mathematics of Deep Learning Algorithms, Part II*, at Toulouse School of Economics.
+
+**Structure of this repository:**
+- Folders:
+    - `Assets`: folder containing screenshots of some obtained results, used in the following report.
+    - `Read Corpus`: folder containing the corpus in textual format after it has been read from the raw corpus as described in the report. Each article is in its own separate `.txt` file.
+    - `BM25_BERT_DungMelki.ipynb`: Jupyter Notebook containing all the implementation and commentaries on the results.
 
 ---
 
@@ -20,6 +26,10 @@ For this task, we implement a function `make_corpus()` that iteratively reads ev
 
 The code and further details related to implementation can be found in the project's Jupyter Notebook. 
 
+In this repository we provide: 
+- A link to the original raw Wikipedia dump file (in `xml.bz2` format) which can be used to create the corpus from scratch using the function `make_corpus()`. We made the file available on our Google Drive, [**here**](https://drive.google.com/file/d/19UstaNTXard1UHjG0DWY1A2f2HhdwbBM/view?usp=sharing).
+- Alternatively, the created textual corpus in the subfolder `Read Corpus` which contains 1000 articles, each article in its own separate `.txt` file.
+
 ---
 
 # **Part II: Experiments**
@@ -33,7 +43,7 @@ Now that we have a valid corpus, we begin experimenting with different IR method
 Given, a document <img src="https://render.githubusercontent.com/render/math?math=D"> and a <img src="https://render.githubusercontent.com/render/math?math=Q"> that contains keywords <img src="https://render.githubusercontent.com/render/math?math=q_1,..., q_n">, we define the BM25 score of the document <img src="https://render.githubusercontent.com/render/math?math=D"> as:
 
 
-<img src="https://render.githubusercontent.com/render/math?math=score(D, Q) = \sum_{i = 1}^n IDF(q_i) \cdot \frac{TF(q_i, D) \cdot (k_1 + 1)}{TF(q_i, D) + k_1 \cdot \left( 1 - b \plus b \cdot \frac{|D|}{avgdl} \right)}">
+<img src="https://render.githubusercontent.com/render/math?math=score(D, Q) = \sum_{i = 1}^n IDF(q_i) \cdot \frac{TF(q_i, D) \cdot (k_1 + 1)}{TF(q_i, D) + k_1 \cdot \left( 1 - b + b \cdot \frac{|D|}{avgdl} \right)}">
 
 
 where: 
@@ -91,3 +101,20 @@ As we know, the corpus on which BERT has been trained contains the **full Englis
 For this reason, we thought that we do not need to re-train and finetune BERT for our scoring task, since it has already "seen" the articles found in our corpus. Being trained on document-level corpus and not word-based ones, BERT would be able to idenitfy the connections between our queries and the articles available in the small corpus that we have.
 
 Furthermore, finetuning BERT would require training again on query-answers data sets such as [**MSMARCO**](https://microsoft.github.io/msmarco/) or [**TREC-CAR**](https://trec.nist.gov/pubs/trec26/papers/Overview-CAR.pdf), which were used by Nogueira and Cho (2019) in their implementation. However, due to network constraints (downloading the huge data sets proved not possible) and computational constraints, as well as time constraints (according to Nogueira and Cho, finetuning BERT required more than 30 hours of training), we were unable to finetune it to our specific task. We assumed that it may provide good results 'out-of-the-box'. Unfortunately, experimental results have shown otherwise:
+
+### **BERT Finetuned on MS-MARCO**
+Another experiment we implement is using BERT model implemented by Nogueira and Cho (2019) which has been trained on the full MS-MARCO data set. This trained model is made available on their project's [GitHub page](https://github.com/nyu-dl/dl4marco-bert) and can be easily downloaded and imported. 
+
+After importing the model, we also experiment on some queries with it, without obtaining any improvement in the results. For some reason (that we have not yet figured out), the retrieved articles are not relevant to the queries. This is in contradiction with the actual results obtained by the researchers, who have achieved state-of-the-art results. We will conduct further investigation into our implementation in order to find out the reason for these uncomforming results.
+
+# **Part III: Final Discussion**
+
+In this short project, we conducted some small scale experiments comparing information retrieval results on simple queries using **BM25**  and **BERT-based** scoring. The results obtained have proven to be quite unexpected and we may refer the reasons to the following: 
+
+- Due to network constraints, big corpuses and datasets such as a bigger subset (or the full) English Wikipedia or MS-MARCO could not be downloaded and used for implementing more reliable information retrieval solutions. Having to work with a considerably small corpus is liable to lead to weird results.
+- Due to computational constraints, BERT could not be finetuned on larger scale datasets and this may be the main reason for the unexpected results we obtain. 
+- An additional layer may need to be added to the BERT binary classifier in order to compute a better score for each document, thus leading to more accurate results.
+
+### **What's next?**
+Even if the deadline for the project has arrived, we do not consider this project as over. We consider that what has been implemented is just a part of a *work-in-progress* that will hopefully be continued beyond the limits of this course. The upcoming steps will consist mainly of figuring out the reasons for the unexpected results obtained and fixing them, as well as creating a faster and more efficient implementation of IR using BERT, and comparing with other IR methods that have not been discussed in this short report, such as End-to-End methods.
+
