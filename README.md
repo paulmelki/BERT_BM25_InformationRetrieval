@@ -63,8 +63,15 @@ In the above two queries, we see that the results obtained are relevant. For the
 
 In the second query related to "anarchism", we see that the top three results are relevant indeed: the first one being an article exactly related to the topic, the second one being a related one and the third being about an author (Ayn Rand) who wrote many pieces and books about anarchism.
 
-So far, BM25 looks like a usesful method. However, we will see how it fails when the queries become more complicated, such as when they contain a question, a whole sentence, or an abbreviation. We search for an abbreviation ("ATM") and look at the results:
+So far, BM25 looks like a useful method. However, we will see how it fails when the queries become more complicated, such as when they contain a question, a whole sentence, or an abbreviation. For example, the results of a query about an abbrevation and one that contains a full interrogative sentence are the following:
 
+![BM25 ATM Results](https://github.com/paulmelki/bert-search-engine/blob/main/Assets/ATM_bm25.PNG?raw=true)
+
+![BM25 WhatIsAnarchism Results](https://github.com/paulmelki/bert-search-engine/blob/main/Assets/whatisanarchism_bm25.PNG?raw=true)
+
+In the above results, we can see clearly how BM25 fails as the queries become more complicated. This could mainly due to the fact that it is a pure TF-IDF method that does not prioritize keywords in the query over other words. 
+
+This problem could be solved by combining BM25 with more advanced text processing techniques. Indeed, as we can see, we are not applying any advanced processing techniques such as lemmatization or keyword extraction. Further experiments will work on implementing these.
 
 
 ## **Information Retrieval using BERT**
