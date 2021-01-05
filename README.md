@@ -47,8 +47,27 @@ After computing the BM25 score of each document, which gives the relevance of ea
 
 On the implementation side, we use `Rank-BM25` library developed by Dorian Brown (https://github.com/dorianbrown/rank_bm25), and which implements different variants of the BM25 algorithm. It can be easily installed using `pip install rank-bm25`. 
 
+#### **Some Results**
+As we know the topics of some of the articles included, we implement some queries about these topics and see whether their relevant articles are returned. Some of these topics included:
+- Autism
+- Anarchism 
+- ATM 
+
+We first try to implement some simple queries that include only the title of the article, and see if the relevant article is returned. The results are shown in the below screenshots:
+
+![BM25 Autism Results](https://github.com/paulmelki/bert-search-engine/blob/main/Assets/autism_bm25.PNG?raw=true)
+
+![BM25 Anarchism Results](https://github.com/paulmelki/bert-search-engine/blob/main/Assets/anarchism_bm25.PNG?raw=true)
+
+In the above two queries, we see that the results obtained are relevant. For the query about "autism", only the top result seems to be relevant. However, this could be simply due to the unavailability of more relevant articles in the small corpus we have, and not due to a problem in the method.
+
+In the second query related to "anarchism", we see that the top three results are relevant indeed: the first one being an article exactly related to the topic, the second one being a related one and the third being about an author (Ayn Rand) who wrote many pieces and books about anarchism.
+
+So far, BM25 looks like a usesful method. However, we will see how it fails when the queries become more complicated, such as when they contain a question, a whole sentence, or an abbreviation. We search for an abbreviation ("ATM") and look at the results:
+
+
+
 ## **Information Retrieval using BERT**
-### **BERT without Finetuning**
 Following Nogueira and Cho's (2019) method, we try to implement **BERT** as a document re-ranker that will rank the relevance of the documents in the corpus with respect to a given query. 
 
 As we know, BERT for classification tasks takes two sentences as input. Given a document $D$ and a query $Q$ that have been tokenized using a BERT tokenizer, we concatenate the query (Sentence 1) and the document (Sentence 2) together, separating them with a `[CLS]` classification token, and feed them to the original pre-trained BERT model implement as a binary classifier where the two classes are: 
@@ -59,6 +78,7 @@ As we know, BERT for classification tasks takes two sentences as input. Given a 
 
 As such, BERT will return the probability of document <img src="https://render.githubusercontent.com/render/math?math=D"> being relevant to the query <img src="https://render.githubusercontent.com/render/math?math=Q">. Given a certain query <img src="https://render.githubusercontent.com/render/math?math=Q">, we apply this method on all documents <img src="https://render.githubusercontent.com/render/math?math=D_1, D_2, ..., D_n"> in the corpus and get a *relevance score* for each of them. The documents are then ranked by their obtained scores from most relevant to least relevant (similarly to BM25) and this will be the result of our information retrieval task.
 
+### **BERT without Finetuning**
 As we know, the corpus on which BERT has been trained contains the **full English Wikipedia** (2,500M words) along with the BooksCorpus (800M words).
 
 For this reason, we thought that we do not need to re-train and finetune BERT for our scoring task, since it has already "seen" the articles found in our corpus. Being trained on document-level corpus and not word-based ones, BERT would be able to idenitfy the connections between our queries and the articles available in the small corpus that we have.
